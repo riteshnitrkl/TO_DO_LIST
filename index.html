@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Todo List</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>DAILY ROUTINE MANAGER</h1>
+  <div id="todos"></div>
+  <div>
+    <input id="inp" type="text" placeholder="Enter Activity">
+    <button onclick="addTodo()">Add</button>
+  </div>
+
+  <script>
+    let todos = []; // Store todos as an array of objects
+
+    function addTodo() {
+      const inputEl = document.getElementById("inp");
+      const todoText = inputEl.value.trim();
+
+      if (todoText === '') {
+        alert('Please enter a todo item.');
+        return;
+      }
+
+      // Add new todo to the array
+      todos.push(todoText);
+
+      // Re-render the todo list
+      renderTodos();
+
+      // Clear the input field
+      inputEl.value = '';
+    }
+
+    function deleteTodo(index) {
+      // Remove the todo from the array
+      todos.splice(index, 1);
+
+      // Re-render the todo list
+      renderTodos();
+    }
+
+    function renderTodos() {
+      const parentEl = document.getElementById("todos");
+      parentEl.innerHTML = ''; // Clear existing todos
+
+      todos.forEach((todoText, index) => {
+        // Create new todo div
+        const newTodo = document.createElement('div');
+        newTodo.setAttribute("id", 'todo-' + (index + 1));
+
+        // Create new heading element
+        const newHeading = document.createElement('h4');
+        newHeading.textContent = (index + 1) + '. ' + todoText;
+
+        // Create new button element
+        const newButton = document.createElement('button');
+        newButton.textContent = 'Delete';
+        newButton.setAttribute("onclick", "deleteTodo(" + index + ")");
+
+        // Append elements to the new todo div
+        newTodo.appendChild(newHeading);
+        newTodo.appendChild(newButton);
+
+        // Append new todo to the parent element
+        parentEl.appendChild(newTodo);
+      });
+    }
+  </script>
+</body>
+
+</html>
+
+
+    
